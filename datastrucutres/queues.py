@@ -1,4 +1,5 @@
 import linked_list
+import random
 class Queue:
     def __init__(self):
         self.items = []
@@ -62,9 +63,17 @@ class LinkedQueue(linked_list.LinkedList):
 class PriorityLinkedQueue(LinkedQueue):
     def __init__(self):
         super().__init__()
+        self.max = 0
+        self.min = 0
     
-    def enqueue(self, item):
-        priority = item[0]
+    def enqueue(self, item, priority:int ):
+        if type(priority) != int:
+            if self.numItems == 0:
+                self.max = priority
+                self.min = priority
+                self.append[priority,item]
+        else:
+            raise TypeError("priority must be an int")
         
 
 def LinkedQueueTest():
@@ -78,7 +87,9 @@ def LinkedQueueTest():
         print(i)
 
 def Priority_test():
-    pass
+    test = PriorityLinkedQueue()
+    for i in range(5):
+        test.append(random.randin(1,5),random.randint(1,5))
 
 if __name__== "__main__":
     LinkedQueueTest()

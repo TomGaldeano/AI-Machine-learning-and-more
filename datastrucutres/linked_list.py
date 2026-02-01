@@ -1,6 +1,6 @@
 class LinkedList:
     """
-    List is better in every way to this
+    List is better in performance but the linked list can take up gaps in memory
     """
     class __Node:
         def __init__(self,item,next=None):
@@ -20,13 +20,6 @@ class LinkedList:
             self.next = next
 
     def __init__(self, contents=[]):
-        """
-        # Here we keep a reference to the first node in the linked list
-        # and the last item in the linked list. They both point to a
-        # dummy node to begin with. This dummy node will always be in
-        # the first position in the list and will never contain an item.
-        # Its purpose is to eliminate special cases in the code below
-        """
         self.first = LinkedList.__Node(None,None)
         self.last = self.first
         self.numItems=0
