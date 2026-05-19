@@ -65,8 +65,18 @@ class PriorityLinkedQueue(LinkedQueue):
         super().__init__()
         self.maximum = 0
         self.minimum = 0
+
+    def __priority_index(self,priority):
+        index = 0
+        cursor = self.first
+        for _ in range(self.numItems):
+            cursor = cursor.getNext()
+            index+=1
+            if cursor.getItem()[0] >= priority:
+                return index
+
     
-    def enqueue(self, item, priority:int ):
+    def enqueue(self, priority:int, item ):
         #Highest priority goes first on queue
         if type(priority) == int:
             if self.numItems == 0:
@@ -76,11 +86,15 @@ class PriorityLinkedQueue(LinkedQueue):
             else:
                 if priority <= self.minimum:
                     self.minimum = priority
-                    self.append(priority)
-                elif priority > self.maximum:
-                    self.maximum = priority
+                    self.insert(0,[priority,item])
                     
-                
+                elif priority >= self.maximum:
+                    self.maximum = priority
+                    self.append([priority,item])
+                else:
+                    self.insert(self.__priority_index(priority),[priority,item])
+
+         
         else:
             raise TypeError("priority must be an int")
         
@@ -105,7 +119,8 @@ def Priority_test():
         test.enqueue(test_data[i][0],test_data[i][1])
     print(test_data)
     for i in test:
-        print(i)
+        print("-",i)
+
 
 if __name__== "__main__":
     #LinkedQueueTest()

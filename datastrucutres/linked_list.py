@@ -92,20 +92,21 @@ class LinkedList:
         cursor = self.first
         if self.numItems == 1 and index == 0:
             self.first = LinkedList.__Node(None,None)
-            self.last = self.first
             self.numItems=0
-        elif index < self.numItems:
+            tmp = self.last
+            self.last = self.first      
+            return tmp.getItem()
+        elif index < self.numItems and index >-1:
             for i in range(index):
                 cursor = cursor.getNext()
 
             cursor2 = cursor.getNext()
+            tmp = cursor2
             cursor.setNext(cursor2.getNext())
             self.numItems -= 1
-        elif index == self.numItems:
-            for i in range(index-2):
-                cursor = cursor.getNext()
-            self.last=cursor.getNext()
-            self.items=0
+            return tmp.getItem()
+        else:
+            raise IndexError()
 
     def __eq__(self, other):
          if type(self) != type(other):
@@ -151,4 +152,6 @@ class LinkedList:
                     if cursor.getItem() == item:
                         return True
             return False
-            
+
+if __name__ == "__main__":
+    pass
