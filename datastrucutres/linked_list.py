@@ -91,11 +91,12 @@ class LinkedList:
     def delitem(self,index):
         cursor = self.first
         if self.numItems == 1 and index == 0:
+            tmp = self.last.getItem()
             self.first = LinkedList.__Node(None,None)
             self.numItems=0
-            tmp = self.last
+            
             self.last = self.first      
-            return tmp.getItem()
+            return tmp
         elif index < self.numItems and index >-1:
             for i in range(index):
                 cursor = cursor.getNext()
@@ -104,7 +105,9 @@ class LinkedList:
             tmp = cursor2
             cursor.setNext(cursor2.getNext())
             self.numItems -= 1
-            return tmp.getItem()
+            if index == self.numItems:
+                self.last = cursor
+            return cursor2.getItem()
         else:
             raise IndexError()
 
@@ -130,6 +133,12 @@ class LinkedList:
     def __iter__(self):
         self.cursor = self.first
         return self
+    
+    def __str__(self):
+        ans = "" 
+        for i in self:
+            ans+=str(i)+", "
+        return ans
     
     def __next__(self):
         if self.cursor == None:

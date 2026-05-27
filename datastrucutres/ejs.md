@@ -1,9 +1,3 @@
-8. Implement the infix evaluator program described in the chapter. You should
-accept input and produce output as described in that section of the text. The
-input tokens should will all be separated by blanks to make retrieval of the
-tokens easy. Don’t forget to convert your number tokens from strings to floats
-when writing the program.
-
 9. Implement the radix sort algorithm described in the chapter. Use the algorithm to
 sort a list of words you find on the internet or elsewhere. Write a main program
 that tests your radix sort algorithm.

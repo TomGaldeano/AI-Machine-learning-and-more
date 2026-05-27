@@ -14,8 +14,12 @@ def stack_test():
     stack.append("dsds")
     stack.append(3)
     tnp = stack.pop()
-    for i in stack:
-        print(i)
+    print(stack)
+    a = stack.pop()
+    print(stack)
+    a = stack.pop()
+    print(a,tnp)
+    print(stack)
 
 if __name__ == "__main__":
     stack_test()
