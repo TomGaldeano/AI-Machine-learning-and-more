@@ -1,6 +1,4 @@
-9. Implement the radix sort algorithm described in the chapter. Use the algorithm to
-sort a list of words you find on the internet or elsewhere. Write a main program
-that tests your radix sort algorithm.
+
 
 10. Searching a sequence of items for a particular item takes O(n) time on average
 where n is the number of items in the list. However, if the list is sorted first, then
