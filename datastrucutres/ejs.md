@@ -1,12 +1,11 @@
 hashmaps
-
-2. Complete the HashSet class found in the chapter by implementing the methods
-described in the two tables of set operations. Then, write a main function to test
-these operations. Save the class in a file called hashset.py so it can be imported into
-other programs. If you call your main function in hashset.py with the if __name__
-== “__main__” statement, then when you import it into another program your
-hashset.py main function will not be executed, but when you run hashset.py on
-its own, its main function will run to test your HashSet class.
+Complete the Sudoku puzzle as described in the chapter. The program should read
+a text file. Prompt the user for the name of the text file. The text file should be
+placed in the same directory or folder as the program so it can easily be found by
+your program. There are six sample Sudoku puzzles that you can solve available
+on the text’s website. Write the program to read a text file like those you find on
+the text’s website. Print both the unsolved and solved problem to the screen as
+shown below. (js)
 
 3. Memoize the tic tac toe program from Chap. 3 to improve its performance. To do
 this each board must have a hash value. You should implement a __hash__ method
@@ -16,7 +15,7 @@ value for the board so that each board has its own unique hash value. Then
 memoize the minimax function to remember the value found for a particular
 board’s configuration. The minimax function should start by checking whether
 or not the value for this board has already been computed and the function should
-return it if it has.
+return it if it has. (js)
 
 4. Write a version of the HashSet class that allows you to specify the maximum and
 minimum allowable load factor. Then run a number of tests where you plot the
