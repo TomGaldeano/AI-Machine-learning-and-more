@@ -1,10 +1,12 @@
 #The set method is implemented like this
 class HashSet:
-    def __init__(self,contents=[]):
+    def __init__(self,contents=[],maxload = 0.75,minload = 0.25):
         self.items = [None] * 10
         self.numItems = 0
         for item in contents:
             self.add(item)
+        self.maxload = maxload
+        self.minload = minload
 
     class _PlaceHolder:
         def __init__(self):
@@ -40,7 +42,7 @@ class HashSet:
         if HashSet.__add(item,self.items):
             self.numItems+=1
             load = self.numItems/len(self.items)
-            if load >= 0.75:
+            if load >= self.maxload:
                 self.items = HashSet.__rehash(self.items,[None]*2*len(self.items))
     
     @classmethod 
@@ -61,7 +63,7 @@ class HashSet:
         if HashSet.__remove(item,self.items):
             self.numItems -= 1
             load = max(self.numItems, 10) / len(self.items)
-            if load <= .25:
+            if load <= self.minload:
                 self.item = HashSet.__rehash(self.items,[None]*(len(self.items))//2)
         else:
             raise KeyError("Item not in HashSet")
@@ -254,8 +256,57 @@ def symetric_difference_test():
     if test3 == test:
         print("symmetric difference update works")
 
-if __name__ == "__main__":
+def endtest():
     tester()
     union_test()
     intersection_test()
     symetric_difference_test()
+
+def timer():
+    print("Testing time taken to add 100 thousand items with different load factors")
+    import time
+    test = HashSet()
+    start = time.time()
+    for i in range(1000000):
+        test.add(i)
+    end = time.time()
+    print("Time taken to add 100 thousand items: ", end-start)
+    time.sleep(1)
+    testhigh = HashSet(maxload = 0.9,minload = 0.5)
+    start = time.time()
+    for i in range(1000000):
+        testhigh.add(i)
+    end = time.time()
+    print("Time taken to add 100 thousand items high load: ", end-start)
+    time.sleep(1)
+    testlow = HashSet(maxload = 0.5,minload = 0.1)
+    start = time.time()
+    for i in range(1000000):
+        testlow.add(i)
+    end = time.time()
+    print("Time taken to add 100 thousand items small load: ", end-start)
+    time.sleep(1)
+    print("Testing time taken to search 100 thousand items with different load factors")
+    start = time.time()
+    for i in range(100000,0,10):
+        i in test
+    end = time.time()
+    print("Time taken to search 100 thousand items: ", end-start)
+    time.sleep(1)
+    start = time.time()
+    for i in range(100000,0,10):
+        i in testhigh
+    end = time.time()
+    print("Time taken to search 100 thousand items high load: ", end-start)
+    time.sleep(1)
+    start = time.time()
+    for i in range(100000,0,10):
+        i in testlow
+    end = time.time()
+    print("Time taken to search 100 thousand items small load: ", end-start)
+
+
+
+if __name__ == "__main__":
+    #endtest()
+    timer()

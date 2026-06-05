@@ -1,35 +1,4 @@
-hashmaps
-Complete the Sudoku puzzle as described in the chapter. The program should read
-a text file. Prompt the user for the name of the text file. The text file should be
-placed in the same directory or folder as the program so it can easily be found by
-your program. There are six sample Sudoku puzzles that you can solve available
-on the text’s website. Write the program to read a text file like those you find on
-the text’s website. Print both the unsolved and solved problem to the screen as
-shown below. (js)
-
-3. Memoize the tic tac toe program from Chap. 3 to improve its performance. To do
-this each board must have a hash value. You should implement a __hash__ method
-for the Board class. The hash value should be unique to a board’s configuration.
-In other words, the X’s, O’s, and Dummy objects should factor into the hash
-value for the board so that each board has its own unique hash value. Then
-memoize the minimax function to remember the value found for a particular
-board’s configuration. The minimax function should start by checking whether
-or not the value for this board has already been computed and the function should
-return it if it has. (js)
-
-4. Write a version of the HashSet class that allows you to specify the maximum and
-minimum allowable load factor. Then run a number of tests where you plot the
-average time taken to add an item to a set given different maximum load factors.
-Also gather information about the average time it takes to test the membership of
-an item in a set for different maximum load factors. From this information you
-should be able to see some of the space/time trade-off in hash tables. Generate
-XML data in the plot format from these experimental results and plot the data to
-see what it tells you. From the gathered information, express your opinion about
-the optimal load factor for the HashSet class. Comment on the optimal maximum
-load factor at the top of the program that performs your tests
-
 trees
-
 Write a program that asks the user to enter a prefix expression. Then, the program
 should print out the infix and postfix forms of that expression. Finally, it should
 print the result of evaluating the expression. Interacting with the program should
