@@ -34,6 +34,9 @@ class Queue:
 
     def isEmpty(self):
         return self.frontIdx == len(self.items)
+    
+    def __str__(self):
+        return str(self.items)
 
 class LinkedQueue(linked_list.LinkedList):
     def __init__(self):

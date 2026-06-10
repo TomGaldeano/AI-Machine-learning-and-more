@@ -1,15 +1,4 @@
 trees
-Write a program that asks the user to enter a prefix expression. Then, the program
-should print out the infix and postfix forms of that expression. Finally, it should
-print the result of evaluating the expression. Interacting with the program should
-look like this.
-Please enter a prefix expression: + + * 4 5 6 7
-The infix form is: (((4 * 5) + 6) + 7)
-The postfix form is: 4 5 * 6 + 7 +
-The result is: 33
-If the prefix expression is malformed, the program should print that the expression
-is malformed and it should quit. It should not try to print the infix or postfix forms
-of the expression in this case.
 
 2. Write a program that reads a list of numbers from the user and lets the user
 insert, delete, and search for values in the tree. The program should be menu
@@ -38,8 +27,7 @@ Make a choice...
 Choice? 3
 Value? 8
 Yes, 8 is in the tree.
-This copy belongs to 'acha04'
-6.9 Programming Problems 181
+
 Make a choice...
 1. Insert into tree.
 2. Delete from tree.
@@ -71,7 +59,6 @@ from the tree.
 recursive function can return the child as the tree after deleting the value. This
 would be the case if deleting 6 from the tree in Fig. 6.13. In this case, to delete
 Fig. 6.13 The Tree After Deleting 9
-This copy belongs to 'acha04'
 182 6 Trees
 Fig. 6.14 The Tree After Deleting 6
 the node containing 6 from the tree you simply return the tree for the node
