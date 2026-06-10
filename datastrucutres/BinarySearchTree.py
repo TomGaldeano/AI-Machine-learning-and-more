@@ -44,6 +44,26 @@ class BinarySearchTree:
             if self.right != None:
                 for elem in self.right:
                     yield elem
+
+        def __str__(self):
+            def left(node):
+                if node.getLeft() == None:
+                    return
+                else:
+                    return node.getLeft().getVal()
+                
+            def right(node):
+                if node.getRight() == None:
+                    return
+                else:
+                    return node.getRight().getVal()
+                
+            def parent(node):
+                if node.getParent() == None:
+                    return
+                else:
+                    return node.getParent().getVal()
+            return f"parent: {parent(self)}, value: {self.val}, left: {left(self)}, right: {right(self)}"
         
     def __init__(self):
         self.root = None
@@ -54,16 +74,17 @@ class BinarySearchTree:
         static function (not a method of the class) but is hidden inside the insert
         function so users of the class will not know it exists
         """
-        def __insert(root,val,parent):
+        def __insert(root,val):
             if root == None:
-                return BinarySearchTree.__Node(val,parent = parent)
+                return BinarySearchTree.__Node(val)
             if val < root.getVal():
-                root.setLeft(__insert(root.getLeft(),val,root))
+                root.setLeft(__insert(root.getLeft(),val))
+                root.getLeft().setParent(root)
             else:
-                root.setRight(__insert(root.getRight(),val,root))
+                root.setRight(__insert(root.getRight(),val))
+                root.getRight().setParent(root)
             return root
-
-        self.root = __insert(self.root,val,self.root)
+        self.root = __insert(self.root,val)
 
     def __iter__(self):
         if self.root != None:
@@ -78,18 +99,57 @@ class BinarySearchTree:
         return ans[:-3]
     
     def delete(self,val):
-        node = self.getNode(val)   
-        if node == None:
-            raise IndexError("Element does not exist")
-        if node.hasChildren():
-            pass
-        else:
-            parent = node.getParent()
-            if parent.getLeft() == node:
-                parent.setLeft(None)
+        node = self.getNode(val)
+        def __delete(node):
+            if node == None:
+                raise IndexError("Element does not exist")
+            if node.getLeft() == None:
+                parent = node.getParent()
+                if parent.getRight() == node:
+                    parent.setRight(node.getRight())
+                    parent.getRight().setParent(parent)
+                else:
+                    parent.setLeft(node.getRight())
+                    parent.getLeft().setParent(parent)
+            elif node.getRight() == None:
+                parent = node.getParent()
+                if parent.getRight() == node:
+                    parent.setRight(node.getLeft())
+                    parent.getRight().setParent(parent)
+                else:
+                    parent.setLeft(node.getLeft())
+                    parent.getLeft().setParent(parent)
             else:
-                parent.setRight(None)
+                if node == self.root:
+                    self.root = None
+                else:
+                    parent = node.getParent()
+                    if parent.getLeft() == node:
+                        parent.setLeft(None)
+                    else:
+                        parent.setRight(None)
 
+        def __getrightmost(node):
+            if node.getRight() == None:
+                return node
+            return __getrightmost(node.getRight())
+
+        if node.getLeft() != None and node.getRight() != None:
+            left = node.getLeft()
+            if left.getRight()==None:
+                node.setVal(left.getVal())
+                __delete(left)
+            else:
+                right = __getrightmost(left)
+                if right.hasChildren():
+                    node.setVal(right.getVal())
+                    __delete(right)
+                else:
+                    node.setVal(right.getVal())
+                    right.getParent().setRight(None)
+
+        else:
+            __delete()
 
     def getNode(self,val):
         def __getNode(val,node):
@@ -103,21 +163,31 @@ class BinarySearchTree:
                 else:
                     return None
             if node.getRight() == None:
-                if node.getRight().getVal() <= val:
-                    return __getNode(val,node.getRight())
+                if node.getLeft().getVal() <= val:
+                    return __getNode(val,node.getLeft())
                 else:
                     return None
-            if node.getRight().getVal() >= val:
+            if node.getVal() <= val:
                 return __getNode(val,node.getRight())
-            if node.getRight().getVal() <= val:
-                    return __getNode(val,node.getRight())
-            return None            
+            else:
+                return __getNode(val,node.getLeft())
 
         if self.root == None:
             raise IndexError("no nodes in tree")
         return __getNode(val,self.root)
     
-
+    def printNodes(self):
+        def nodePrint(node):
+            if node.hasChildren():
+                print(node)
+                if node.getLeft() != None:
+                    nodePrint(node.getLeft())
+                if node.getRight() != None:
+                    nodePrint(node.getRight())
+            else:
+                print(node)
+            return
+        nodePrint(self.root)
 
 def main():
     s = input("Enter a list of numbers: ")

@@ -20,6 +20,8 @@ def looop():
     tree = BinarySearchTree()
     for i in [5,2,8,6,7,9,4,1]:
         tree.insert(float(i))
+    tree.delete(float(5))
+    tree.printNodes()
     while option != "5":
         option = menu()
         match option:
@@ -36,7 +38,6 @@ def looop():
                 else:        
                     print(f"No, {val} is not in the tree.")
             case "4":
-                print(tree)
-        
+                print(tree)      
 
 looop()
