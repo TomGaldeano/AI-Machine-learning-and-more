@@ -1,5 +1,58 @@
 graphs
 
+1. Write a program to find a path between vertex 9 and 29 in the graph shown in
+Fig. 7.9. Be sure to print the path (i.e. the sequence of vertices) that must be
+traversed in the path between the two vertices. An XML file describing this graph
+can be found on the text website.
+
+2. Modify the first problem to find the shortest path between vertices 9 and 29 in
+terms of the number of edges traversed. In other words, ignore the weights in this
+problem. Use breadth first search to find this solution.
+
+3. Write the code and perform Dijkstra’s algorithm on the graph in Fig. 7.9 to find
+the minimum cost of visiting all other vertices from vertex 9 of the graph.
+
+4. Write the code and perform Kruskal’s algorithm on either the directed graph in
+Fig. 7.9 or the undirected example found in the chapter. XML files for both graphs
+can be found on the text website.
+
+5. Not every graph must be represented explicitly. Sometimes it is just as easy to
+write a function that given a vertex, will compute the vertices that are adjacent
+to it (that have edges between them). For instance, consider the water bucket problem. There are two buckets in this problem: a 3 gallon bucket and a 5 gallon
+bucket. Your job is to put exactly 4 gallons in the 5 gallon bucket. The rules of
+the game say that you can completely fill a bucket of water, you can pour one
+bucket into another, and you can completely dump a bucket out on the ground.
+You cannot partially fill up a bucket, but you can pour one bucket into another.
+You are to write a program that tells you how to start with two empty buckets and
+end with 4 gallons in the 5 gallon bucket.
+To complete this problem you must implement depth first search of a graph.
+The vertices in this problem consist of the state of the problem which is given
+by the amount of water in each bucket. Along with the search algorithm you
+must also implement an adjacent function that given a vertex containing this state
+information will return a list of states that may be adjacent to it. It may be easier
+to generate some extra adjacent states and then filter out the unreasonable ones
+before returning the list from adjacent. For instance, it may be easier to generate
+a state with 6 gallons in the 5 gallon bucket and then throw that state out later
+by removing states from the list which have more gallons than allowed in that
+bucket.
+The program should print out the list of actions to take to get from no water in
+either bucket to four gallons in the five gallon pail. The solution may not be the
+absolute best solution, but it should be a valid solution that is printed when the
+program is completed.
+
+6. A bipartite graph is a graph where the vertices may be divided into two sets such
+that no two vertices in the same set have an edge between them. All edges in the
+graph go between vertices that appear in different sets. A program can test to see
+if a graph is bipartite by doing a traversal of the graph, like a depth first search,
+and looking for odd cycles. A graph is bipartite if and only if it does not contain
+an odd cycle. Write a program that given a graph decides if it is bipartite or not.
+The program need only print Yes, it is bipartite, or No, it is not bipartite.
+
+7. Extend the program from the previous exercise to print the set of vertices in each
+of the two bipartite sets if the graph is found to be bipartite.
+
+Membership Structures
+
 1. Go to the text website and download the dictionary of words. Build a bloom filter
 for this list of words and use it to spellcheck the declaration of independence,
 printing all the misspelled words to the screen.
