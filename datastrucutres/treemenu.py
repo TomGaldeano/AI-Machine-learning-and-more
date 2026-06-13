@@ -20,7 +20,7 @@ def looop():
     tree = BinarySearchTree()
     for i in [5,2,8,6,7,9,4,1]:
         tree.insert(float(i))
-    tree.delete(float(5))
+    tree.delete(float(4))
     tree.printNodes()
     while option != "5":
         option = menu()

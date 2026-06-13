@@ -103,7 +103,16 @@ class BinarySearchTree:
         def __delete(node):
             if node == None:
                 raise IndexError("Element does not exist")
-            if node.getLeft() == None:
+            if not node.hasChildren():
+                if node == self.root:
+                    self.root = None
+                else:
+                    parent = node.getParent()
+                    if parent.getLeft() == node:
+                        parent.setLeft(None)
+                    else:
+                        parent.setRight(None)
+            elif node.getLeft() == None:
                 parent = node.getParent()
                 if parent.getRight() == node:
                     parent.setRight(node.getRight())
@@ -119,15 +128,6 @@ class BinarySearchTree:
                 else:
                     parent.setLeft(node.getLeft())
                     parent.getLeft().setParent(parent)
-            else:
-                if node == self.root:
-                    self.root = None
-                else:
-                    parent = node.getParent()
-                    if parent.getLeft() == node:
-                        parent.setLeft(None)
-                    else:
-                        parent.setRight(None)
 
         def __getrightmost(node):
             if node.getRight() == None:
@@ -138,7 +138,7 @@ class BinarySearchTree:
             left = node.getLeft()
             if left.getRight()==None:
                 node.setVal(left.getVal())
-                __delete(left)
+                node.setLeft(left.getLeft())
             else:
                 right = __getrightmost(left)
                 if right.hasChildren():
@@ -147,9 +147,8 @@ class BinarySearchTree:
                 else:
                     node.setVal(right.getVal())
                     right.getParent().setRight(None)
-
         else:
-            __delete()
+            __delete(node)
 
     def getNode(self,val):
         def __getNode(val,node):

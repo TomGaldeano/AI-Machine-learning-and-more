@@ -1,33 +1,5 @@
 trees
 
-3. Complete the Sudoku program as described in Chap. 5 and augment it with the
-depth first search described in Sect. 6.6.2 to complete a Sudoku program that
-is capable of solving any Sudoku puzzle. It should solve these puzzles almost
-instantly. If it is taking a long time to solve a puzzle it is likely because your
-reduce function is not reducing the puzzle as described in Chap. 5.
-To complete this exercise you will need two functions, the solutionOK func-
-tion and the solutionViable function. The solutionViable function is given in the
-chapter and returns True if none of the sets in the matrix are empty. The solutionOK
-function returns True if the solution is a valid solution. This can be checked very
-easily. If any of the sets in the matrix do not contain contain exactly 1 element
-then the solution is not okay and False should be returned. If the union of any
-group within a Sudoku puzzle does not contain 9 elements then the solution is
-not okay and False should be returned. Otherwise, the solution is okay and True
-should be returned.
-After completing this program you should be able to solve Sudoku problems like
-sudoku7.txt or sudoku8.txt which are available for download on the text’s website.
-
-4. Design an OrderedTreeSet class which can be used to insert items, delete items,
-and lookup items in an average case of O(log n) time. Implement the in operator
-on this class for set containment. Also implement an iterator that returns the items
-of the set in ascending order. The design of this set should allow items of any
-type to be added to the set as long as they implement the __lt__ operator. This
-OrderedTreeSet class should be written in a file called orderedtreeset.py. The main
-function of this module should consist of a test program for your OrderedTreeSet
-class that thoroughly tests your code. The main function should be called using
-the standard if statement that distinguishes between the module being imported
-or run itself.
-
 5. Design an OrderedTreeMap class which uses an OrderedTreeSet class in its
 implementation. To organize this correctly you should create two modules: an
 orderedtreeset.py module and an orderedtreemap.py module. Have the Ordered
