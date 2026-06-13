@@ -74,6 +74,7 @@ class OrderedTreeSet:
         
     def __init__(self):
         self.root = None
+        self.numItems = 0
     
     def insert(self,val):
         """
@@ -96,8 +97,12 @@ class OrderedTreeSet:
             return root
         try:
             self.root = __insert(self.root,val)
+            self.numItems += 1
         except TypeError:
             pass
+
+    def __len__(self):
+        return self.numItems
 
     def __iter__(self):
         if self.root != None:
@@ -110,6 +115,12 @@ class OrderedTreeSet:
         for i in self:
             ans = ans +str(i) + " - "
         return ans[:-3]
+    
+    def __contains__(self, item):
+        node = self.getNode(item)
+        if node == None:
+            return False
+        return True
     
     def delete(self,val):
         node = self.getNode(val)
@@ -166,6 +177,7 @@ class OrderedTreeSet:
         else:
             __delete(node)
         node = self.getNode(val)
+        self.numItems -= 1
 
     def getNode(self,val):
         def __getNode(val,node):

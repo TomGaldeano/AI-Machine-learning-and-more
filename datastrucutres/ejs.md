@@ -1,12 +1,3 @@
-trees
-
-5. Design an OrderedTreeMap class which uses an OrderedTreeSet class in its
-implementation. To organize this correctly you should create two modules: an
-orderedtreeset.py module and an orderedtreemap.py module. Have the Ordered
-TreeMap class use the OrderedTreeSet class in its implementation the way Hash-
-Set and HashMap were implemented in Chap. 5. Design test cases to thoroughly
-test your OrderedTreeMap class.
-
 graphs
 
 1. Go to the text website and download the dictionary of words. Build a bloom filter
@@ -51,6 +42,7 @@ algorithm from Chap. 7. Use one of the sample graph XML files found on the text
 website as your input data to test your program.
 
 balanced binary tree search
+
 1. Write an AVL tree implementation that maintains balances in each node and
 implements insert iteratively. Write a test program to thoroughly test your program
 on some randomly generated data.
@@ -113,6 +105,7 @@ the amount of time taken to implement the query in this way with the B-tree
 implementation. Comment on the experiment results
 
 Heuristic Search
+
 1. Write a program that uses the five search algorithms in this chapter to search a
 maze as shown in the examples. Construct sample mazes by writing a text file
 where each space represents an open location in the maze and each non-space
