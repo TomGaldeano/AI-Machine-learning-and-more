@@ -161,6 +161,12 @@ class LinkedList:
                     if cursor.getItem() == item:
                         return True
             return False
+        
+    def deep_copy(self):
+        ans = LinkedList()
+        for i in self:
+            ans.append(i)
+        return ans
 
 if __name__ == "__main__":
     pass

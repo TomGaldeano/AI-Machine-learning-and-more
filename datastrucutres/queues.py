@@ -37,6 +37,7 @@ class Queue:
     
     def __str__(self):
         return str(self.items)
+    
 
 class LinkedQueue(linked_list.LinkedList):
     def __init__(self):
@@ -62,6 +63,13 @@ class LinkedQueue(linked_list.LinkedList):
             raise RuntimeError("Attempt to dequeue an empty linked queue")
         item = self.items[0]
         return item
+    
+    def deep_copy(self):
+        copy = LinkedQueue()
+        for i in self:
+            copy.enqueue(i)
+        return copy
+
 
 class PriorityLinkedQueue(LinkedQueue):
     def __init__(self):

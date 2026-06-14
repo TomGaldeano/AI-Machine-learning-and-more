@@ -1,14 +1,5 @@
 graphs
 
-1. Write a program to find a path between vertex 9 and 29 in the graph shown in
-Fig. 7.9. Be sure to print the path (i.e. the sequence of vertices) that must be
-traversed in the path between the two vertices. An XML file describing this graph
-can be found on the text website.
-
-2. Modify the first problem to find the shortest path between vertices 9 and 29 in
-terms of the number of edges traversed. In other words, ignore the weights in this
-problem. Use breadth first search to find this solution.
-
 3. Write the code and perform Dijkstra’s algorithm on the graph in Fig. 7.9 to find
 the minimum cost of visiting all other vertices from vertex 9 of the graph.
 

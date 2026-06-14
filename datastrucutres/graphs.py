@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import math
+import orderedTree
+import linked_list
 
 class Vertex:
     def __init__(self, vertexId, x, y, label):
@@ -9,10 +11,21 @@ class Vertex:
         self.y = y
         self.label = label
         self.adjacent = []
-        self.previous = None
 
     def __repr__(self):
         return f"Vertex({self.vertexId}, label={self.label})"
+    
+    def __str__(self):
+        return f"vertexId: {self.vertexId}, x: {self.x}, y:{self.y}"
+    
+    def __hash__(self):
+        return hash(self.vertexId)
+    
+    def getAdjacent(self):
+        return self.adjacent
+    
+    def setAdjacent(self,items:list):
+        self.adjacent = items
 
 class Edge:
     def __init__(self, v1, v2, weight=0):
@@ -33,6 +46,12 @@ class Edge:
         if item == self.v1 or item == self.v2:
             return True
         return False
+    
+    def __str__(self):
+        return f"v1: {self.v1}, v2: {self.v2}, weight: {self.weight}"
+    
+    def __hash__(self):
+        return hash(self.__str__())
 
 class Graph:
     def __init__(self, directed=True):
@@ -80,6 +99,18 @@ class Graph:
                 if v in i:
                     edges.append(i)
             return edges
+        
+    def calculate_adjacent(self):
+        for i in self.vertices.values():
+            items = set()
+            for j in self.edges:
+                if i in j:
+                    if i != j.v1:
+                        if not self.directed:
+                            items.add(j.v1)
+                    else:
+                        items.add(j.v2)
+            i.setAdjacent(list(items))
 
     def view(self, title="Graph", figsize=(14, 10)):
         """
@@ -207,20 +238,20 @@ def build_screenshot_graph():
     # Edges: (from, to, weight) — read from the screenshot
     edges = [
         # top cluster
-        (8,  2,  4.64),
-        (2,  3,  5.53),
+        (2,  8,  4.64),
+        (3,  2,  5.53),
         (3,  0,  4.45),
         (0,  1,  2.02),
         (1,  4,  1.7),
         (4,  5,  3.28),
         (5,  7,  4.28),
         (5, 12,  3.3),
-        (1, 10,  6.2),  # 0->9 or 1->10 area
+        (10, 1,  6.2),  # 0->9 or 1->10 area
         (10, 11, 1.67),
-        (11, 12, 2.16),
+        (12, 11, 2.16),
         (9, 10,  2.32),
-        (2,  6,  3.41),
-        (3,  9,  5.02),
+        (6,  2,  3.41),
+        (9,  3,  5.02),
         (8, 13,  8.45),
         (10, 0, 6.2),
         (7, 22, 16.43),
@@ -232,29 +263,29 @@ def build_screenshot_graph():
         (15, 17, 8.81),
         (16, 17, 9.01),
         # hub vertex 17
-        (3,  17, 11.6),   # approximate; 3.41 label near 2-6, 11.6 near 3-17
+        (12,  3, 11.6),   # approximate; 3.41 label near 2-6, 11.6 near 3-17
         (9,  17, 7.1),
-        (9,  17, 8.65),   # two edges shown from 9-area to 17
-        (6,  17, 13.47),
+        (10,  17, 8.65),   # two edges shown from 9-area to 17
+        (17,  6, 13.47),
         (14, 17, 7.32),
-        (10, 17, 10.81),
+        (3, 17, 10.81),
         # right-mid cluster
-        (17, 18, 4.07),
-        (18, 19, 1.54),
-        (19, 20, 1.53),
-        (20, 21, 6.17),
-        (21, 22, 4.66),
-        (18, 25, 6.17),
-        (20, 26, 4.72),
-        (21, 28, 9.32),
+        (18, 17, 4.07),
+        (19, 18, 1.54),
+        (20, 19, 1.53),
+        (21, 20, 6.17),
+        (22, 21, 4.66),
+        (25, 18, 6.17),
+        (26, 19, 4.72),
+        (28, 20, 9.32),
         # bottom cluster
         (17, 23, 11.76),
         (17, 24,  8.42),
         (23, 24,  2.18),
-        (20, 28, 9.32),
+        (28, 21, 6.66),
         (24, 27,  4.67),
         (25, 26,  1.86),
-        (25, 27,  3.51),
+        (27, 25,  3.51),
         (27, 29, 11.6),
         (28, 29,  4.24),
     ]
@@ -264,10 +295,46 @@ def build_screenshot_graph():
 
     return g
 
-def pathfinder():
-    g = build_screenshot_graph(directed = False)
-    path = []
-    start = g.get
+def pathfinder(start,end):
+    g = build_screenshot_graph()
+    paths = [] 
+    start = g.get_vertex(start)
+    end = g.get_vertex(end)
+    dragons = list(g.getVertices().values())
+    dragons.remove(start)
+    known = [start]
+    g.calculate_adjacent()
+    for i in start.getAdjacent():
+        q = []
+        q.append(i)
+        known.append(i)
+        dragons.remove(i)
+        if i == end:
+            return q
+        paths.append(q)
+    while True:
+        for p in paths.copy():
+            v = p[-1]
+            paths.remove(p)
+            for i in v.getAdjacent():
+                if i in dragons:
+                    dragons.remove(i)
+                    q = p.copy()
+                    q.append(i)
+                    known.append(i)
+                    paths.append(q)
+                    if i == end:
+                        return q
+
+
+def Dijkstra():
+    g = build_screenshot_graph()
+    g.calculate_adjacent()
+
+def Kruskal():
+    g = build_screenshot_graph()
+    g.calculate_adjacent()
+    
 
 if __name__ == "__main__":
-    g = build_screenshot_graph()
+    print(pathfinder(9,29))
