@@ -41,6 +41,9 @@ class OrderedTreeSet:
         
         def getHash(self):
             return self.hash
+        
+        def __hash__(self):
+            return self.hash
 
         def __iter__(self):
             """inorder traversal"""
@@ -85,6 +88,8 @@ class OrderedTreeSet:
         def __insert(root,val):
             hashVal = hash(val)
             if root == None:
+                if type(val)== OrderedTreeSet.__Node:
+                    return val
                 return OrderedTreeSet.__Node(val)
             if root.getHash() == hashVal:
                 raise TypeError

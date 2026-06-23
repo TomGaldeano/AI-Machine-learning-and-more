@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import math
 import orderedTree
-import linked_list
 
 class Vertex:
     def __init__(self, vertexId, x, y, label):
@@ -58,6 +57,8 @@ class Graph:
         self.vertices = {}   # vertexId -> Vertex
         self.edges = []      # list of Edge objects
         self.directed = directed
+        self.numEdges = 0
+        self.numVerts = 0
 
     def add_vertex(self, vertexId, x=0, y=0, label=None):
         """Add a vertex; label defaults to str(vertexId)."""
@@ -65,6 +66,7 @@ class Graph:
             label = str(vertexId)
         v = Vertex(vertexId, x, y, label)
         self.vertices[vertexId] = v
+        self.numVerts += 1
         return v
 
     def add_edge(self, id1, id2, weight=0):
@@ -82,6 +84,7 @@ class Graph:
             rev = Edge(v2, v1, weight)
             self.edges.append(rev)
             v2.adjacent.append(rev)
+        self.numEdges += 1
         return edge
 
     def get_vertex(self, vertexId):
@@ -196,9 +199,9 @@ class Graph:
         plt.show()
         return fig
 
-def build_screenshot_graph():
+def build_screenshot_graph(directed):
     """Return a Graph that matches the weighted directed graph in the image."""
-    g = Graph(directed=False)
+    g = Graph(directed=directed)
     vertex_positions = [
         (0,  9.5, 18.0),
         (1, 11.5, 18.0),
@@ -267,7 +270,7 @@ def build_screenshot_graph():
         (9,  17, 7.1),
         (10,  17, 8.65),   # two edges shown from 9-area to 17
         (17,  6, 13.47),
-        (14, 17, 7.32),
+        (14, 17, 13.47),
         (3, 17, 10.81),
         # right-mid cluster
         (18, 17, 4.07),
@@ -296,7 +299,7 @@ def build_screenshot_graph():
     return g
 
 def pathfinder(start,end):
-    g = build_screenshot_graph()
+    g = build_screenshot_graph(True)
     paths = [] 
     start = g.get_vertex(start)
     end = g.get_vertex(end)
@@ -332,9 +335,35 @@ def Dijkstra():
     g.calculate_adjacent()
 
 def Kruskal():
-    g = build_screenshot_graph()
+    g = build_screenshot_graph(False)
     g.calculate_adjacent()
+    numVerts = g.numVerts
+    edges = g.getEdges()
+    ans = []
+    edges = sorted(edges,key= lambda x : x.weight)
+    verts = g.getVertices().copy()
+    for i in verts.keys():
+        tree = orderedTree.OrderedTreeSet()
+        tree.insert(verts[i])
+        verts[i] = tree
+    while numVerts > 1:
+        edge = edges[0]
+        edges = edges[1:]
+        if verts[edge.v1.vertexId] != verts[edge.v2.vertexId]:
+            ans.append(edge)
+            numVerts -= 1
+            node = verts[edge.v2.vertexId].root
+            for i in verts[edge.v2.vertexId]:
+                verts[i.vertexId] = verts[edge.v1.vertexId]
+            verts[edge.v2.vertexId].insert(node)
+    graph = Graph(False)
+    graph.vertices = g.getVertices()
+    graph.edges = ans
+    return graph
+
+
     
 
 if __name__ == "__main__":
-    print(pathfinder(9,29))
+    kruskal = Kruskal()
+    kruskal.view()
