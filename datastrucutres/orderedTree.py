@@ -195,12 +195,12 @@ class OrderedTreeSet:
             if not node.hasChildren():
                 return None
             if node.getLeft() == None:
-                if node.getRight().getHash() >= hashVal:
+                if node.getHash() <= hashVal:
                     return __getNode(val,node.getRight())
                 else:
                     return None
             if node.getRight() == None:
-                if node.getLeft().getHash() <= hashVal:
+                if node.getHash() >= hashVal:
                     return __getNode(val,node.getLeft())
                 else:
                     return None

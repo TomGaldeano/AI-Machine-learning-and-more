@@ -1,8 +1,5 @@
 graphs
 
-3. Write the code and perform Dijkstra’s algorithm on the graph in Fig. 7.9 to find
-the minimum cost of visiting all other vertices from vertex 9 of the graph.
-
 6. A bipartite graph is a graph where the vertices may be divided into two sets such
 that no two vertices in the same set have an edge between them. All edges in the
 graph go between vertices that appear in different sets. A program can test to see

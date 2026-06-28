@@ -47,15 +47,15 @@ class Edge:
         return False
     
     def __str__(self):
-        return f"v1: {self.v1}, v2: {self.v2}, weight: {self.weight}"
+        return f"v1: {self.v1.vertexId}, v2: {self.v2.vertexId}, weight: {self.weight}"
     
     def __hash__(self):
-        return hash(self.__str__())
+        return hash(f"({self.v1.vertexId},{self.v2.vertexId})")
 
 class Graph:
     def __init__(self, directed=True):
         self.vertices = {}   # vertexId -> Vertex
-        self.edges = []      # list of Edge objects
+        self.edges = orderedTree.OrderedTreeSet() # list of Edge objects
         self.directed = directed
         self.numEdges = 0
         self.numVerts = 0
@@ -78,12 +78,10 @@ class Graph:
         v1 = self.vertices[id1]
         v2 = self.vertices[id2]
         edge = Edge(v1, v2, weight)
-        self.edges.append(edge)
-        v1.adjacent.append(edge)
+        self.edges.insert(edge)
+        v1.adjacent.append(v2)
         if not self.directed:
-            rev = Edge(v2, v1, weight)
-            self.edges.append(rev)
-            v2.adjacent.append(rev)
+            v2.adjacent.append(v2)
         self.numEdges += 1
         return edge
 
@@ -94,26 +92,15 @@ class Graph:
         return self.vertices
     
     def getEdges(self, v = None):
-        if v == None:
-            return self.edges
-        else:
-            edges = []
-            for i in self.edges:
-                if v in i:
-                    edges.append(i)
-            return edges
-        
-    def calculate_adjacent(self):
-        for i in self.vertices.values():
-            items = set()
-            for j in self.edges:
-                if i in j:
-                    if i != j.v1:
-                        if not self.directed:
-                            items.add(j.v1)
-                    else:
-                        items.add(j.v2)
-            i.setAdjacent(list(items))
+        edges = []
+        for i in self.edges:
+            edges.append(i)
+        return edges
+    
+    def getWeight(self,v1,v2):
+        edge = Edge(v1,v2)
+        edge = self.edges.getNode(edge).val
+        return edge.weight
 
     def view(self, title="Graph", figsize=(14, 10)):
         """
@@ -232,9 +219,7 @@ def build_screenshot_graph(directed):
         (26, 13.5,  8.0),
         (27,  9.5,  6.0),
         (28, 17.0,  7.0),
-        (29, 17.5,  5.0),
-    ]
-
+        (29, 17.5,  5.0),]
     for vid, x, y in vertex_positions:
         g.add_vertex(vid, x, y)
 
@@ -290,12 +275,9 @@ def build_screenshot_graph(directed):
         (25, 26,  1.86),
         (27, 25,  3.51),
         (27, 29, 11.6),
-        (28, 29,  4.24),
-    ]
-
+        (28, 29,  4.24),]
     for v1, v2, w in edges:
         g.add_edge(v1, v2, w)
-
     return g
 
 def pathfinder(start,end):
@@ -303,15 +285,15 @@ def pathfinder(start,end):
     paths = [] 
     start = g.get_vertex(start)
     end = g.get_vertex(end)
-    dragons = list(g.getVertices().values())
-    dragons.remove(start)
+    unvisited = list(g.getVertices().values())
+    unvisited.remove(start)
     known = [start]
     g.calculate_adjacent()
     for i in start.getAdjacent():
         q = []
         q.append(i)
         known.append(i)
-        dragons.remove(i)
+        unvisited.remove(i)
         if i == end:
             return q
         paths.append(q)
@@ -320,8 +302,8 @@ def pathfinder(start,end):
             v = p[-1]
             paths.remove(p)
             for i in v.getAdjacent():
-                if i in dragons:
-                    dragons.remove(i)
+                if i in unvisited:
+                    unvisited.remove(i)
                     q = p.copy()
                     q.append(i)
                     known.append(i)
@@ -329,14 +311,46 @@ def pathfinder(start,end):
                     if i == end:
                         return q
 
-
-def Dijkstra():
-    g = build_screenshot_graph()
-    g.calculate_adjacent()
+def Dijkstra(start):
+    g = build_screenshot_graph(True)
+    start_vertex = g.get_vertex(start)
+    print(g.edges.numItems)
+    paths = dict()
+    known = []
+    visited = set()
+    
+    # Initialize distances
+    for i in g.vertices.keys():
+        if i != start_vertex.vertexId:
+            paths[i] = 9999999999
+    
+    # Add start vertex's neighbors to known
+    for i in start_vertex.getAdjacent():
+        known.append(i)
+        paths[i.vertexId] = g.getWeight(start_vertex, i)
+    paths[start_vertex.vertexId] = 0
+    visited.add(start_vertex.vertexId)
+    
+    while known != []:
+        known = sorted(known, key=lambda x: paths[x.vertexId])
+        vertex = known[0]
+        known.remove(vertex)
+        visited.add(vertex.vertexId)
+        d = paths[vertex.vertexId]
+        
+        for i in vertex.getAdjacent():
+            # Update ALL unvisited neighbors
+            if i.vertexId not in visited:
+                d1 = d + g.getWeight(vertex, i)
+                if paths[i.vertexId] > d1:
+                    paths[i.vertexId] = d1
+                    # Add to known only if it's a new neighbor
+                    if i not in known:
+                        known.append(i)
+    return paths
 
 def Kruskal():
     g = build_screenshot_graph(False)
-    g.calculate_adjacent()
     numVerts = g.numVerts
     edges = g.getEdges()
     ans = []
@@ -346,7 +360,7 @@ def Kruskal():
         tree = orderedTree.OrderedTreeSet()
         tree.insert(verts[i])
         verts[i] = tree
-    while numVerts > 1:
+    while numVerts > 1 and edges != []:
         edge = edges[0]
         edges = edges[1:]
         if verts[edge.v1.vertexId] != verts[edge.v2.vertexId]:
@@ -361,9 +375,9 @@ def Kruskal():
     graph.edges = ans
     return graph
 
-
-    
-
 if __name__ == "__main__":
-    kruskal = Kruskal()
-    kruskal.view()
+    #kruskal = Kruskal()
+    #kruskal.view()
+    egdser = Dijkstra(9)
+    for i in egdser.keys():
+        print(i,egdser[i])
