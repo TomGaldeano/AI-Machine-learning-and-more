@@ -1,16 +1,3 @@
-graphs
-
-6. A bipartite graph is a graph where the vertices may be divided into two sets such
-that no two vertices in the same set have an edge between them. All edges in the
-graph go between vertices that appear in different sets. A program can test to see
-if a graph is bipartite by doing a traversal of the graph, like a depth first search,
-and looking for odd cycles. A graph is bipartite if and only if it does not contain
-an odd cycle. Write a program that given a graph decides if it is bipartite or not.
-The program need only print Yes, it is bipartite, or No, it is not bipartite.
-
-7. Extend the program from the previous exercise to print the set of vertices in each
-of the two bipartite sets if the graph is found to be bipartite.
-
 Membership Structures
 
 1. Go to the text website and download the dictionary of words. Build a bloom filter

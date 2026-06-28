@@ -101,6 +101,41 @@ class Graph:
         edge = Edge(v1,v2)
         edge = self.edges.getNode(edge).val
         return edge.weight
+    
+    def isBipartite(self):
+        colors = dict()
+        tmp = None
+        for i in self.vertices.keys():
+            if tmp == None:
+                tmp = i
+            colors[i] = None
+        visited = set()
+        known = []
+        first = self.vertices[tmp]
+        colors[first.vertexId] = "blue"
+        visited.add(first.vertexId)
+        for i in self.vertices[first.vertexId].getAdjacent():
+            known.append(i)
+            colors[i.vertexId] = "red"
+        while known != []:
+            vertex = known[0]
+            known.remove(vertex)
+            visited.add(vertex.vertexId)
+        for i in vertex.getAdjacent():
+            if colors[i.vertexId] == colors[vertex.vertexId]:
+                return None
+            if colors[vertex.vertexId] == "red":
+                colors[i.vertexId] = "blue"
+            else:
+                colors[i.vertexId] = "red"
+            if i.vertexId not in visited:
+                if i not in known:
+                    known.append(i)
+        return colors
+            
+   
+
+        
 
     def view(self, title="Graph", figsize=(14, 10)):
         """
@@ -375,9 +410,25 @@ def Kruskal():
     graph.edges = ans
     return graph
 
+def bipartidite():
+    g = build_screenshot_graph(False)
+    bip = g.isBipartite()
+    if bip == None:
+        print("Not bipartidite")
+    else:
+        print("bipartidite set 1")
+        for i in bip.keys():
+            if bip[i] == "blue":
+                print(i)
+        print("bipartidite set 2")
+        for i in bip.keys():
+            if bip[i] == "red":
+                print(i)
+
+
 if __name__ == "__main__":
     #kruskal = Kruskal()
     #kruskal.view()
-    egdser = Dijkstra(9)
-    for i in egdser.keys():
-        print(i,egdser[i])
+    #egdser = Dijkstra(9)
+
+
