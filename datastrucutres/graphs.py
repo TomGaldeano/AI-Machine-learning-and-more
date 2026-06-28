@@ -430,5 +430,4 @@ if __name__ == "__main__":
     #kruskal = Kruskal()
     #kruskal.view()
     #egdser = Dijkstra(9)
-
-
+    bipartidite()
