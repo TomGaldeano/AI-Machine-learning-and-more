@@ -118,5 +118,5 @@ def bitchain_test():
 
 if __name__ == "__main__":
     #bitchain_test()
-    bloom_test("AI-Machine-learning-and-more\datastrucutres\words\words2.txt")
+    bloom_test("AI-Machine-learning-and-more/datastrucutres/words/words2.txt")
 

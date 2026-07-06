@@ -4,10 +4,6 @@ Membership Structures
 for this list of words and use it to spellcheck the declaration of independence,
 printing all misspelled words to the screen.
 
-3. Create a trie as in the previous exercise, but also print suggested replacements for
-all misspelled words. This is a tough assignment. Suggested replacements should
-not differ from the original in more than one of the ways suggested in the chapter.
-
 heaps
 
 1. Implement version 2 of the heapsort algorithm. Run your own tests using heapsort
