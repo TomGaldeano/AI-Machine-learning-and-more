@@ -1,9 +1,5 @@
 Membership Structures
 
-1. Go to the text website and download the dictionary of words. Build a bloom filter
-for this list of words and use it to spellcheck the declaration of independence,
-printing all the misspelled words to the screen.
-
 2. Go to the text website and download the dictionary of words. Build a trie datatype
 for this list of words and use it to spellcheck the declaration of independence,
 printing all misspelled words to the screen.
