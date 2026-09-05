@@ -1,38 +1,3 @@
-Membership Structures
-
-2. Go to the text website and download the dictionary of words. Build a trie datatype
-for this list of words and use it to spellcheck the declaration of independence,
-printing all misspelled words to the screen.
-
-heaps
-
-1. Implement version 2 of the heapsort algorithm. Run your own tests using heapsort
-and quicksort to compare the execution time of the two sorting algorithms. Output
-your data in the plot format and plot your data using the PlotData.py program
-provided on the text website.
-
-2. Implement version 1 and version 2 of the program and compare the execution
-times of the two heapsort variations. Gather experimental data in the XML format
-accepted by the PlotData.py program and plot that data to see the difference
-between using version 1 and version 2 of the heap sort algorithm.
-
-3. Implement a smallest on top heap and use it in implementing a priority queue. A
-priority queue has enqueue and dequeue methods. When enqueueing an item on
-a priority queue, a priority is provided. Elements enqueued on the queue include
-both the data item and the priority. Write a test program to test your priority queue
-data structure.
-
-4. Use the priority queue from the last exercise to implement Dijkstra’s algorithm
-from Chap. 7. The priority queue implementation of Dijkstra’s algorithm is more
-efficient. The priority of each element is the cost so far of each vertex added
-to the priority queue. By dequeueing from the priority queue we automatically
-get the next lowest cost vertex from the queue without searching, resulting in a
-O(|V |log|V |) complexity instead of O(|V |2).
-
-5. Use the heapsort algorithm, either version 1 or version 2, to implement Kruskal’s
-algorithm from Chap. 7. Use one of the sample graph XML files found on the text
-website as your input data to test your program.
-
 balanced binary tree search
 
 1. Write an AVL tree implementation that maintains balances in each node and
@@ -43,12 +8,10 @@ on some randomly generated data.
 implements insert recursively. Write a test program to thoroughly test your pro-
 gram on some randomly generated data.
 
-3. Write an AVL tree implementation that maintains heights in each node and imple-
-ments insert recursively. Write a test program to thoroughly test your program on
+3. Write an AVL tree implementation that maintains heights in each node and implements insert recursively. Write a test program to thoroughly test your program on
 some randomly generated data.
 
-4. Write an AVL tree implementation that maintains heights in each node and imple-
-ments insert iteratively. Write a test program to thoroughly test your program on
+4. Write an AVL tree implementation that maintains heights in each node and implements insert iteratively. Write a test program to thoroughly test your program on
 some randomly generated data.
 
 5. Complete programming problem 3. Then implement the delete operation for AVL
